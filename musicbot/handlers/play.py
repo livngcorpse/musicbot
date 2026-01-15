@@ -157,20 +157,28 @@ async def play_file_command(client, message: Message):
 
 def register_play_handler(app):
     """Register play command handlers"""
+    from pyrogram.handlers import MessageHandler
+    
     # Register /play command
     app.add_handler(
-        filters.command(["play", "p"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(play_command)
+        MessageHandler(
+            play_command,
+            filters=filters.command(["play", "p"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Register audio file handler
     app.add_handler(
-        filters.audio &
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(play_file_command)
+        MessageHandler(
+            play_file_command,
+            filters=filters.audio &
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     logger.info("Play handlers registered")

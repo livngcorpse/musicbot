@@ -138,44 +138,61 @@ async def current_command(client, message: Message):
 def register_control_handlers(app):
     """Register control command handlers"""
     
+    from pyrogram.handlers import MessageHandler
+    
     # Pause command
     app.add_handler(
-        filters.command(["pause"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(pause_command)
+        MessageHandler(
+            pause_command,
+            filters=filters.command(["pause"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Resume command
     app.add_handler(
-        filters.command(["resume"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(resume_command)
+        MessageHandler(
+            resume_command,
+            filters=filters.command(["resume"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Skip command
     app.add_handler(
-        filters.command(["skip", "next"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(skip_command)
+        MessageHandler(
+            skip_command,
+            filters=filters.command(["skip", "next"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Stop command
     app.add_handler(
-        filters.command(["stop", "leave"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(stop_command)
+        MessageHandler(
+            stop_command,
+            filters=filters.command(["stop", "leave"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Current playing command
     app.add_handler(
-        filters.command(["current", "now", "np"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(current_command)
+        MessageHandler(
+            current_command,
+            filters=filters.command(["current", "now", "np"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     logger.info("Control handlers registered")

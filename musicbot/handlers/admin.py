@@ -193,42 +193,62 @@ async def help_command(client, message: Message):
 def register_admin_handlers(app):
     """Register admin command handlers"""
     
+    from pyrogram.handlers import MessageHandler
+    
     # Ping command
     app.add_handler(
-        filters.command(["ping"]) & 
-        filters.group &
-        is_authorized
-    )(ping_command)
+        MessageHandler(
+            ping_command,
+            filters=filters.command(["ping"]) & 
+                   filters.group &
+                   is_authorized
+        )
+    )
     
     # Help command
     app.add_handler(
-        filters.command(["help", "start"]) & 
-        filters.group &
-        is_authorized
-    )(help_command)
+        MessageHandler(
+            help_command,
+            filters=filters.command(["help", "start"]) & 
+                   filters.group &
+                   is_authorized
+        )
+    )
     
     # Stats command (owner only)
     app.add_handler(
-        filters.command(["stats"]) & 
-        filters.group
-    )(stats_command)
+        MessageHandler(
+            stats_command,
+            filters=filters.command(["stats"]) & 
+                   filters.group
+        )
+    )
     
     # Restart command (owner only)
     app.add_handler(
-        filters.command(["restart"]) & 
-        filters.group
-    )(restart_command)
+        MessageHandler(
+            restart_command,
+            filters=filters.command(["restart"]) & 
+                   filters.group
+        )
+    )
     
     # Eval command (owner only) - DISABLE IN PRODUCTION
     app.add_handler(
-        filters.command(["eval"]) & 
-        filters.group
-    )(eval_command)
+        MessageHandler(
+            eval_command,
+            filters=filters.command(["eval"]) & 
+                   filters.group
+        )
+    )
     
     # Exec command (owner only) - DISABLE IN PRODUCTION
     app.add_handler(
-        filters.command(["exec"]) & 
-        filters.group
-    )(exec_command)
+        MessageHandler(
+            exec_command,
+            filters=filters.command(["exec"]) & 
+                   filters.group
+        )
+    )
     
     logger.info("Admin handlers registered")

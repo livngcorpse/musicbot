@@ -155,36 +155,50 @@ async def remove_command(client, message: Message):
 def register_queue_handlers(app):
     """Register queue command handlers"""
     
+    from pyrogram.handlers import MessageHandler
+    
     # Queue command
     app.add_handler(
-        filters.command(["queue", "q"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(queue_command)
+        MessageHandler(
+            queue_command,
+            filters=filters.command(["queue", "q"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Clear queue command
     app.add_handler(
-        filters.command(["clear"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(clear_command)
+        MessageHandler(
+            clear_command,
+            filters=filters.command(["clear"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Shuffle queue command
     app.add_handler(
-        filters.command(["shuffle"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(shuffle_command)
+        MessageHandler(
+            shuffle_command,
+            filters=filters.command(["shuffle"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     # Remove from queue command
     app.add_handler(
-        filters.command(["remove"]) & 
-        filters.group &
-        is_authorized &
-        is_not_banned
-    )(remove_command)
+        MessageHandler(
+            remove_command,
+            filters=filters.command(["remove"]) & 
+                   filters.group &
+                   is_authorized &
+                   is_not_banned
+        )
+    )
     
     logger.info("Queue handlers registered")
