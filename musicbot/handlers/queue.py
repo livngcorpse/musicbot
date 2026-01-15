@@ -158,7 +158,7 @@ def register_queue_handlers(app):
     # Queue command
     app.add_handler(
         filters.command(["queue", "q"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(queue_command)
@@ -166,7 +166,7 @@ def register_queue_handlers(app):
     # Clear queue command
     app.add_handler(
         filters.command(["clear"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(clear_command)
@@ -174,7 +174,7 @@ def register_queue_handlers(app):
     # Shuffle queue command
     app.add_handler(
         filters.command(["shuffle"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(shuffle_command)
@@ -182,7 +182,7 @@ def register_queue_handlers(app):
     # Remove from queue command
     app.add_handler(
         filters.command(["remove"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(remove_command)

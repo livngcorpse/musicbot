@@ -37,10 +37,9 @@ def owner_filter():
     """Filter for owner-only commands"""
     async def func(_, __, message: Message):
         try:
-            return message.from_user.id == config.OWNER_ID
+            return message.from_user and message.from_user.id == config.OWNER_ID
         except Exception:
             return False
-            
     return filters.create(func)
 
 def sudo_filter():

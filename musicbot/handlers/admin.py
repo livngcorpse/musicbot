@@ -12,8 +12,12 @@ from database.mongo import db, get_user_stats
 
 logger = logging.getLogger(__name__)
 
-@owner_filter
+@music_command
 async def restart_command(client, message: Message):
+    # Check if user is owner
+    if message.from_user.id != config.OWNER_ID:
+        await message.reply("❌ Only owner can use this command.")
+        return
     """Handle /restart command - restart the bot"""
     try:
         await message.reply("🔄 Restarting bot...")
@@ -27,8 +31,12 @@ async def restart_command(client, message: Message):
         logger.error(f"Error in restart command: {e}")
         await message.reply("❌ Failed to restart bot.")
 
-@owner_filter
+@music_command
 async def stats_command(client, message: Message):
+    # Check if user is owner
+    if message.from_user.id != config.OWNER_ID:
+        await message.reply("❌ Only owner can use this command.")
+        return
     """Handle /stats command - show bot statistics"""
     try:
         # System stats
@@ -64,8 +72,12 @@ async def stats_command(client, message: Message):
         logger.error(f"Error in stats command: {e}")
         await message.reply("❌ Failed to fetch statistics.")
 
-@owner_filter
+@music_command
 async def eval_command(client, message: Message):
+    # Check if user is owner
+    if message.from_user.id != config.OWNER_ID:
+        await message.reply("❌ Only owner can use this command.")
+        return
     """Handle /eval command - evaluate Python code (owner only)"""
     try:
         # Extract code from message
@@ -89,8 +101,12 @@ async def eval_command(client, message: Message):
     except Exception as e:
         logger.error(f"Error in eval command: {e}")
 
-@owner_filter
+@music_command
 async def exec_command(client, message: Message):
+    # Check if user is owner
+    if message.from_user.id != config.OWNER_ID:
+        await message.reply("❌ Only owner can use this command.")
+        return
     """Handle /exec command - execute Python code (owner only)"""
     try:
         # Extract code from message
@@ -180,39 +196,39 @@ def register_admin_handlers(app):
     # Ping command
     app.add_handler(
         filters.command(["ping"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized
     )(ping_command)
     
     # Help command
     app.add_handler(
         filters.command(["help", "start"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized
     )(help_command)
     
     # Stats command (owner only)
     app.add_handler(
         filters.command(["stats"]) & 
-        filters.chat_type.groups
+        filters.group
     )(stats_command)
     
     # Restart command (owner only)
     app.add_handler(
         filters.command(["restart"]) & 
-        filters.chat_type.groups
+        filters.group
     )(restart_command)
     
     # Eval command (owner only) - DISABLE IN PRODUCTION
     app.add_handler(
         filters.command(["eval"]) & 
-        filters.chat_type.groups
+        filters.group
     )(eval_command)
     
     # Exec command (owner only) - DISABLE IN PRODUCTION
     app.add_handler(
         filters.command(["exec"]) & 
-        filters.chat_type.groups
+        filters.group
     )(exec_command)
     
     logger.info("Admin handlers registered")

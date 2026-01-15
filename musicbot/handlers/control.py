@@ -141,7 +141,7 @@ def register_control_handlers(app):
     # Pause command
     app.add_handler(
         filters.command(["pause"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(pause_command)
@@ -149,7 +149,7 @@ def register_control_handlers(app):
     # Resume command
     app.add_handler(
         filters.command(["resume"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(resume_command)
@@ -157,7 +157,7 @@ def register_control_handlers(app):
     # Skip command
     app.add_handler(
         filters.command(["skip", "next"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(skip_command)
@@ -165,7 +165,7 @@ def register_control_handlers(app):
     # Stop command
     app.add_handler(
         filters.command(["stop", "leave"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(stop_command)
@@ -173,7 +173,7 @@ def register_control_handlers(app):
     # Current playing command
     app.add_handler(
         filters.command(["current", "now", "np"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(current_command)

@@ -1,6 +1,6 @@
 import logging
 from typing import Optional, List, Dict, Any
-from datetime import datetime
+from datetime import datetime, timedelta
 import asyncio
 
 try:
@@ -345,3 +345,17 @@ async def get_banned_users_safe() -> List[int]:
     if db.connected:
         return await db.get_banned_users()
     return await get_banned_users_fallback()
+
+async def increment_play_count(*args, **kwargs):
+    # Stub: play count tracking not implemented yet
+    return True
+async def get_user_stats(user_id: int):
+    """
+    Stub for user statistics.
+    Returns default values until full implementation.
+    """
+    return {
+        "plays": 0,
+        "songs_requested": 0,
+        "time_listened": 0
+    }

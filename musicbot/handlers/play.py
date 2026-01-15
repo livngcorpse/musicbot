@@ -30,9 +30,9 @@ async def play_command(client, message: Message):
         user = message.from_user
         await create_user_safe(user.id, user.username, user.first_name)
         
-        # Send searching message
+        # Send searching message    
         search_msg = await message.reply("🔍 Searching for your song...")
-        
+
         # Extract video info
         video_info = await downloader.extract_info(query)
         if not video_info:
@@ -160,7 +160,7 @@ def register_play_handler(app):
     # Register /play command
     app.add_handler(
         filters.command(["play", "p"]) & 
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(play_command)
@@ -168,7 +168,7 @@ def register_play_handler(app):
     # Register audio file handler
     app.add_handler(
         filters.audio &
-        filters.chat_type.groups &
+        filters.group &
         is_authorized &
         is_not_banned
     )(play_file_command)
