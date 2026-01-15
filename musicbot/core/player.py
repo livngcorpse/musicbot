@@ -154,13 +154,14 @@ class Player:
                 return False
                 
             # Join voice chat if not already joined
-            if not call_manager.is_playing(chat_id):
+            if chat_id not in call_manager.active_chats:
                 success = await call_manager.join_voice_chat(chat_id)
                 if not success:
                     return False
                     
-            # Prepare audio stream
-            success = await self.audio_manager.prepare_audio_stream(chat_id, audio_file)
+            # Start or change audio stream
+            success = await call_manager.change_stream(chat_id, audio_file)
+            
             if not success:
                 return False
                 
@@ -173,6 +174,9 @@ class Player:
                 'current_track': song_info,
                 'position': 0
             }
+            
+            if chat_id in call_manager.active_chats:
+                call_manager.active_chats[chat_id]['playing'] = True
             
             logger.info(f"Started playing in chat {chat_id}")
             return True

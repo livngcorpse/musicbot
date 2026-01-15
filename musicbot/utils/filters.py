@@ -164,9 +164,9 @@ def maintenance_filter():
     return filters.create(func)
 
 # Predefined filter combinations
-admin_or_private = filters.or_filter(admin_filter(), private_filter())
-authorized_and_not_banned = filters.and_filter(authorized_filter(), ~banned_filter())
-group_and_voice_chat = filters.and_filter(group_filter(), voice_chat_filter())
+admin_or_private = admin_filter() | private_filter()
+authorized_and_not_banned = authorized_filter() & ~banned_filter()
+group_and_voice_chat = group_filter() & voice_chat_filter()
 
 # Convenience aliases
 is_admin = admin_filter()
